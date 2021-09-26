@@ -4,6 +4,14 @@ import speech_recognition as sr #pip install SpeechRecognition
 import wikipedia #pip install wikipedia
 import smtplib
 import webbrowser as wb 
+from spotipy.oauth2 import SpotifyClientCredentials
+import spotipy as py #pip install spotipy
+import sys 
+import pprint 
+import pyautogui #pip install pyautogui
+from time import sleep
+
+
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -132,12 +140,41 @@ if __name__ == "__main__":
             busca = takeCommand().lower()
             wb.open_new_tab("https://www.youtube.com/results?search_query=" + busca)
             speak("su busqueda sobre"+ busca + "se abrira pronto")
+            speak("si deseas reproducir otra cancion dimelo...")
+            buscar = takeCommand().lower()
+            wb.open_new("https://www.youtube.com/results?search_query=")
+
 
         elif 'mix 1' in query:
             speak("Deseas reproducir el mix1?")
             si = takeCommand().lower()
             wb.open_new_tab("https://www.youtube.com/watch?v=L_RNv6for7k&list=RDL_RNv6for7k")
             speak("Reproducire el mix 1 en Youtube")
+
+        elif 'spotify' in query:
+            speak("que artista?")
+            search = takeCommand().lower()
+            speak("que cancion?")
+            song = takeCommand().lower()
+
+            client_id = '200a7381d6964a63a65c358f7a0b0060'
+            client_secret = '31dbfd9a421d41f984b5c3852dca5ab8'
+            author = search
+            cancion = song .upper()
+
+            
+            sp = py.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id, client_secret))
+            result = sp.search(author)
+        if len(author) > 0:
+            for i in range(0,len(result["tracks"]["items"])):
+                    name_song = result["tracks"]["items"][i]["name"].upper()
+                    if cancion in name_song:
+                        flag = 1
+                        wb.open(result["tracks"]["items"][i]["uri"])
+                        sleep(5)
+                        pyautogui.press("enter")
+            if flag == 0:
+                wb.open('spotify:search:' + cancion)
 
             
 
