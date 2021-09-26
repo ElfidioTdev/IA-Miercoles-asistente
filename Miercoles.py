@@ -133,6 +133,12 @@ if __name__ == "__main__":
             wb.open_new_tab("https://www.youtube.com/results?search_query=" + busca)
             speak("su busqueda sobre"+ busca + "se abrira pronto")
 
+        elif 'mix1' in query:
+            speak("Deseas reproducir el mix1?")
+            si = takeCommand().lower()
+            wb.open_new_tab("https://www.youtube.com/watch?v=L_RNv6for7k&list=RDL_RNv6for7k")
+            speak("Reproducire el mix 1 en Youtube")
+
             
 
         
